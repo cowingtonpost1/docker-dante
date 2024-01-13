@@ -5,4 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/cowingtonpost1/docker-
 RUN apk update --no-cache && apk add dante-server
 RUN mkdir -p /config
 
-CMD ["/usr/sbin/sockd", "-f" "/config/sockd.conf"]
+EXPOSE 1080
+
+VOLUME /config
+
+CMD ["/usr/sbin/sockd", "-f", "/config/sockd.conf"]
