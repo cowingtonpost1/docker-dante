@@ -27,6 +27,12 @@ jobs:
           - name: Set up QEMU
             uses: docker/setup-qemu-action@v3
 
+          - name: Extract Docker metadata
+            id: meta
+            uses: docker/metadata-action@v5.5.0
+            with:
+              images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
           - name: Build and push Docker image
             uses: docker/build-push-action@v5.1.0
             with:
@@ -35,8 +41,5 @@ jobs:
               push: ${{ github.event_name != 'pull_request' }}
               load: false
               tags: ${{ steps.meta.outputs.tags }}
-              labels: ${{ steps.meta.outputs.labels }}
-              cache-from: type=gha
-              cache-to: type=gha,mode=max
 
 
